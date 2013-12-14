@@ -4,7 +4,12 @@
 {% raw %}
   <script type="text/x-handlebars">
     <h2>Welcome to Ember.js</h2>
-
+    <nav>
+        <ul>
+            <li>{{#link-to 'index'}}Home{{/link-to}}</li>
+            <li>{{#link-to 'about'}}About{{/link-to}}</li>
+        </ul>
+    </nav>
     {{outlet}}
   </script>
 
@@ -15,6 +20,11 @@
     {{/each}}
     </ul>
   </script>
+
+  <script type="text/x-handlebars" id="about">
+    WTF is foosball.io?
+  </script>
+
 {% endraw %}
 {% endblock %}
 
