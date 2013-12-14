@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% raw %}
+  <script type="text/x-handlebars">
+    <h2>Welcome to Ember.js</h2>
+
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="index">
+    <ul>
+    {{#each item in model}}
+      <li>{{item}}</li>
+    {{/each}}
+    </ul>
+  </script>
+{% endraw %}
+{% endblock %}
+
+{% block javascript %}
+  <script src="{{ url_for('static', filename='js/libs/jquery-1.10.2.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/libs/handlebars-1.1.2.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/libs/ember-1.2.0.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  <!-- to activate the test runner, add the "?test" query string parameter -->
+  <script src="{{ url_for('static', filename='tests/runner.js') }}"></script>
+{% endblock %}
