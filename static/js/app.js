@@ -1,13 +1,22 @@
-App = Ember.Application.create();
+App = Ember.Application.create({
+     LOG_TRANSITIONS: true
+});
 
 App.Router.map(function() {
     // put your routes here
     this.route('index', { path: '/' });
     this.resource('leagues', function() { 
-        this.resource('league', { path: '/leagues/:league_id' });
+        this.resource('league', { path: '/:league_id' });
     });
-    this.route('account', { path: '/account'});
+    this.resource('players', function() {
+        this.resource('player', { path: '/:player_id' });
+    });
+    this.resource('games', function() {
+        this.resource('game', { path: '/:game_id' });
+    });
+    //this.route('account', { path: '/account'});
     this.route('about', { path: '/about' });
+
 });
 
 App.IndexRoute = Ember.Route.extend({
@@ -16,15 +25,43 @@ App.IndexRoute = Ember.Route.extend({
   }
 });
 
-/*
-App.ApplicationRoute = Ember.Route.extend({
-  setupController: function(controller) {
-    // `controller` is the instance of ApplicationController
-    controller.set('title', "Hello world!");
-  }
+App.LeaguesController = Ember.Controller.extend({
+    // initial values of controller state:
+    someFlag: false,
+
+    actions: {
+        addLeague: function() {
+            //this.set('someFlag', true);
+            console.log("Add a league!");
+        }
+    }
 });
 
-App.ApplicationController = Ember.Controller.extend({
-  appName: 'My First Example'
+App.LeaguesLeagueController = Ember.Controller.extend({
+
 });
-*/
+
+App.LeagueRoute = Ember.Route.extend({
+    model: function(league_id) {
+        console.log("returning a league model...");
+        return {name: 'Skinny Scrub League'};
+    }
+});
+
+App.PlayerRoute = Ember.Route.extend({
+    model: function(player_id) {
+        console.log("returning a player model...");
+        return {name: 'Somebody!'};
+    }
+});
+
+App.GameRoute = Ember.Route.extend({
+    model: function(game_id) {
+        console.log("returning a game model...");
+        return {
+            name: 'Game 1', 
+            homeScore: 3,
+            visitorScore: 10
+        };
+    }
+});

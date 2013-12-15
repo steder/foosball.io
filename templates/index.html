@@ -8,6 +8,7 @@
         <ul>
             <li>{{#link-to 'index'}}Home{{/link-to}}</li>
             <li>{{#link-to 'about'}}About{{/link-to}}</li>
+            <li>{{#link-to 'leagues'}}Leagues{{/link-to}}</li>
         </ul>
     </nav>
     {{outlet}}
@@ -23,6 +24,86 @@
 
   <script type="text/x-handlebars" id="about">
     WTF is foosball.io?
+  </script>
+
+  <script type="text/x-handlebars" id="leagues">
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="leagues/index">
+    <h2>Your Leagues</h2>
+    <ul>
+      <li>{{#link-to 'league' 'skinnyscrub'}}Skinny Scrub League{{/link-to}}</li>
+    </ul>
+    <button {{action 'addLeague'}}>Add a league</button>
+  </script>
+
+  <script type="text/x-handlebars" id="league">
+    <h2>{{name}}</h2>
+    <p>Welcome to the {{name}} league!</p>
+    <section>
+      <h1>Players</h1>
+      <ul>
+        <li>{{#link-to 'player' 'p1'}}P1{{/link-to}}</li>
+        <li>{{#link-to 'player' 'p2'}}P2{{/link-to}}</li>
+      </ul>
+    <button {{action 'addPlayer'}}>Add a player</button>
+
+    </section>
+    <section>
+      <h1>Games</h1>
+      <ul>
+        <li>{{#link-to 'game' 'g1'}}Game 100{{/link-to}}</li>
+        <li>Game 99</li>
+        <li>Game 98</li>
+        <li>Game 97</li>
+        <li>Game 96</li>
+      </ul>
+      <button {{action 'addGame'}}>Add a game</button>
+
+    </section>
+  </script>
+
+  <script type="text/x-handlebars" id="players">
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="players/index">
+  </script>
+
+  <script type="text/x-handlebars" id="player">
+    <h1>Stats for Player {{name}}</h1>
+  </script>
+
+  <script type="text/x-handlebars" id="games">
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="games/index">
+  </script>
+
+  <script type="text/x-handlebars" id="game">
+    <h1>Stats for Game {{name}}</h1>
+    <section>
+      <h1>Home Team Score</h1>
+      <span>{{homeScore}}</span>
+    </section>
+    <section>
+      <h1>Visiting Team Score</h1>
+      <span>{{visitorScore}}</span>
+    </section>
+    <section>
+      <h1>Home</h1>
+      <ul>
+        <li>{{#link-to 'player' 'p1'}}P1{{/link-to}}</li>
+      </ul>
+    </section>
+    <section>
+      <h1>Visitors</h1>
+      <ul>
+        <li>{{#link-to 'player' 'p2'}}P2{{/link-to}}</li>
+      </ul>
+    </section>
   </script>
 
 {% endraw %}
