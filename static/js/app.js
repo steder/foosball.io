@@ -19,6 +19,10 @@ App.Router.map(function() {
 
 });
 
+App.Router.reopen({
+    location: 'history'
+});
+
 App.IndexRoute = Ember.Route.extend({
   model: function() {
     return ['red', 'yellow', 'blue'];
