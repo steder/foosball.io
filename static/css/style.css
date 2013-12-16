@@ -1,4 +1,110 @@
-/* Put your CSS here */
-.ember-application {
-    margin: 20px;
-}
+h1 {
+  color: #fc5c47;
+  font-family: "Oleo Script Swash Caps", cursive;
+  font-size: 3rem;
+  margin: 0; }
+
+h2,
+h3 {
+  font-family: "Varela Round", sans-serif; }
+
+.wrapper {
+  clear: both;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 940px; }
+
+nav {
+  background: #233250;
+  width: 100%; }
+
+.navigation {
+  list-style-type: none;
+  margin: 0 auto;
+  max-width: 940px;
+  width: 100%; }
+  .navigation li {
+    border-right: solid 1px #fff;
+    float: left; }
+  .navigation a {
+    color: #fc5c47;
+    display: block;
+    font-family: "Varela Round", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    padding: .9rem 1rem .5rem 2.5rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    -webkit-transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+    .navigation a:hover {
+      background: #fff;
+      color: #233250; }
+
+.leagues ol {
+  list-style-type: none;
+  padding: 0; }
+.leagues li {
+  border-bottom: solid 1px #fc5c47;
+  padding: 1rem 0 1rem 1rem;
+  width: 50%; }
+
+.players {
+  float: left;
+  width: 50%; }
+
+header {
+  border-top: solid 0.3rem #6dbcdb; }
+
+.blanklist, .stats .player-info ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0; }
+
+button {
+  background: #6dbcdb;
+  -moz-box-shadow: inset 0 0 2px 2px rgba(255, 255, 255, 0.3);
+  -webkit-box-shadow: inset 0 0 2px 2px rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 0 2px 2px rgba(255, 255, 255, 0.3);
+  border: solid 1px rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  color: white;
+  padding: .5rem 1rem;
+  text-transform: uppercase;
+  -webkit-transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transition: all 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955); }
+  button:hover {
+    background: #d7dadb;
+    color: #233250; }
+
+.stats {
+  margin: 1rem auto 0; }
+  .stats section {
+    float: left;
+    margin: 0 3% 0 0;
+    width: 23%; }
+    .stats section:last-of-type {
+      margin: 0; }
+    .stats section.player-info {
+      margin: 0 0 0 6%;
+      width: 15%; }
+  .stats h3 {
+    border-bottom: dashed 1px #fc5c47;
+    padding: 0 0 .3rem; }
+  .stats .scores {
+    list-style-type: none; }
+    .stats .scores span {
+      color: #233250;
+      display: block;
+      font-size: 2rem;
+      padding: 0 2rem;
+      margin: 0 auto;
+      text-align: center;
+      width: 3rem; }
+  .stats .player-info a {
+    text-decoration: none; }
+
+.group:after {
+  content: "";
+  display: table;
+  clear: both; }
