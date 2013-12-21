@@ -1,4 +1,5 @@
 Flask-Assets==0.8
+git+https://github.com/jarus/flask-testing@7bf34b039cb93b5447073c12243f9f4debc14a6c#egg=Flask-Testing
 Flask==0.10.1
 Jinja2==2.7.1
 MarkupSafe==0.18
@@ -7,5 +8,6 @@ compass==0.1.4
 ipython==1.1.0
 itsdangerous==0.23
 nose==1.3.0
+twill==0.9
 webassets==0.8
 wsgiref==0.1.2

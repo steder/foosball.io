@@ -10,7 +10,11 @@ statistics and running tournaments.
 To start your server `python foosball.py`
 
 ## Deps
-`gem install sass`
-`sass --watch static/scss`
+
+```
+gem install sass
+sass --watch static/scss
+brew install phantomjs
+```
 
 ![travis ci builid status](https://travis-ci.org/steder/foosball.io.png)
