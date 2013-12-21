@@ -1,0 +1,161 @@
+// Colors
+$drkgry: #D7DADB;
+$ltblue: #6DBCDB;
+$orange: #FC5C47;
+$drkblue: #233250;
+
+// Effects
+@mixin easing ($duration){
+  -webkit-transition: all $duration cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transition:         all $duration cubic-bezier(0.455, 0.03, 0.515, 0.955); 
+}
+
+// Type
+$fancy: 'Oleo Script Swash Caps', cursive;
+$headings: 'Varela Round', sans-serif;
+$body: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+h1 {
+	color: $orange;
+	font-family: $fancy;
+	font-size: 3rem;
+	margin: 0;
+}
+h2,
+h3 {
+	font-family: $headings;
+}
+
+// Scaffolding
+.wrapper {
+	clear: both;
+	margin: 0 auto;
+	width: 100%;
+	max-width: 940px;
+}
+nav {
+	background: $drkblue;
+	width: 100%;
+}
+.navigation {
+	list-style-type: none;
+	margin: 0 auto;
+	max-width: 940px;
+	width: 100%;
+	li {
+		border-right: solid 1px #fff;
+		float: left;
+	}
+	a {
+		color: $orange;
+		display: block;
+		font-family: $headings;
+		font-size: 1.2rem;
+		font-weight: 400;
+		padding: .9rem 1rem .5rem 2.5rem;
+		text-decoration: none;
+		text-transform: uppercase;
+		@include easing(300ms);
+		&:hover {
+			background: #fff;
+			color: $drkblue;
+		}
+	}
+}
+
+.leagues {
+	ol {
+		list-style-type: none;
+		padding: 0;
+	}
+	li {
+		border-bottom: solid 1px $orange;
+		padding: 1rem 0 1rem 1rem;
+		width: 50%;
+	}
+}
+
+.players,
+ {
+	float: left;
+	width: 50%;
+}
+
+// Globals
+header {
+	border-top: solid .3rem $ltblue;
+}
+
+.blanklist {
+	list-style-type:none;
+	margin: 0;
+	padding: 0;
+}
+
+button {
+	background: $ltblue;
+	-moz-box-shadow: inset 0 0 2px 2px rgba(255,255,255,.3);
+	-webkit-box-shadow: inset 0 0 2px 2px rgba(255,255,255,.3);
+	box-shadow: inset 0 0 2px 2px rgba(255,255,255,.3);
+	border: solid 1px rgba(0,0,0,.4);
+	border-radius: 5px;
+	color: rgba(255,255,255,1);
+	padding: .5rem 1rem;
+	text-transform: uppercase;
+	@include easing(300ms);
+	&:hover {
+		background: $drkgry;
+		color: $drkblue;
+	}
+}
+
+
+
+//
+.stats {
+	margin:1rem auto 0;
+	section {
+		float: left;
+		margin: 0 3% 0 0;
+		width: 23%;
+		&:last-of-type {
+			margin: 0;
+		}
+		&.player-info {
+			margin: 0 0 0 6%;
+			width: 15%;
+		}
+	}
+	h3 {
+		border-bottom: dashed 1px $orange;
+		padding: 0 0 .3rem;
+	}
+	.scores { 
+		list-style-type: none;
+		span {
+			color: $drkblue;
+			display: block;
+			font-size: 2rem;
+			padding: 0 2rem;
+			margin: 0 auto;
+			text-align: center;
+			width: 3rem;
+		}
+	}
+	.player-info {
+		ul {
+			@extend .blanklist;
+		}
+		a {
+			text-decoration: none;
+		}
+	}
+}
+
+
+// Helpers
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
