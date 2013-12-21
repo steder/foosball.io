@@ -20,7 +20,7 @@ def index(path):
 
 @app.route("/api")
 def api_placeholder():
-    return jsonify({"placeholder": "stuff"})
+    return jsonify({"placeholder": "hey, make an api!"})
 
 
 if __name__ == "__main__":
