@@ -7,7 +7,7 @@ statistics and running tournaments.
 `mkvirtualenv foosball`
 `pip install -r requirements.txt`
 
-To start your server `python app.py`
+To start your server `python foosball.py`
 
 ## Deps
 `gem install sass`
