@@ -2,6 +2,15 @@ App = Ember.Application.create({
      LOG_TRANSITIONS: true
 });
 
+App.Store = DS.Store.extend({
+  revision: 13,
+  adapter: DS.FixtureAdapter
+});
+
+App.Router.reopen({
+    location: 'history'
+});
+
 App.Router.map(function() {
     // put your routes here
     this.route('index', { path: '/' });
@@ -19,15 +28,13 @@ App.Router.map(function() {
 
 });
 
-App.Router.reopen({
-    location: 'history'
-});
 
 App.IndexRoute = Ember.Route.extend({
   model: function() {
     return ['red', 'yellow', 'blue'];
   }
 });
+
 
 App.LeaguesController = Ember.Controller.extend({
     // initial values of controller state:
@@ -41,9 +48,11 @@ App.LeaguesController = Ember.Controller.extend({
     }
 });
 
+
 App.LeaguesLeagueController = Ember.Controller.extend({
 
 });
+
 
 App.LeagueRoute = Ember.Route.extend({
     model: function(league_id) {
@@ -52,12 +61,14 @@ App.LeagueRoute = Ember.Route.extend({
     }
 });
 
+
 App.PlayerRoute = Ember.Route.extend({
     model: function(player_id) {
         console.log("returning a player model...");
         return {name: 'Somebody!'};
     }
 });
+
 
 App.GameRoute = Ember.Route.extend({
     model: function(game_id) {
