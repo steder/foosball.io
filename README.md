@@ -4,10 +4,20 @@
 statistics and running tournaments.
 
 ## Get Set Up
+
+### Dependencies
+
 `mkvirtualenv foosball`
 `pip install -r requirements.txt`
 
-To start your server `python foosball.py`
+### Setup your database
+
+`python foosball.py db init`
+`python foosball.py db upgrade`
+
+### Run
+
+To start your server use: `python foosball.py runserver`
 
 ## Deps
 
