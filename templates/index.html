@@ -27,7 +27,10 @@
     <section class="leagues wrapper">
       <h2>Your Leagues</h2>
       <ol>
-        <li>{{#link-to 'league' 'skinnyscrub'}}Skinny Scrub League{{/link-to}}</li>
+      {{#each model}}
+        <li>{{#link-to 'league' id}}{{name}}{{/link-to}}</li>
+      {{/each}}
+
       </ol>
       <button {{action 'addLeague'}}>Add a league</button>
     </section>
@@ -40,8 +43,9 @@
       <div class="players">
         <h3>Players</h3>
         <ul>
-          <li>{{#link-to 'player' 'p1'}}P1{{/link-to}}</li>
-          <li>{{#link-to 'player' 'p2'}}P2{{/link-to}}</li>
+        {{#each players}}
+          <li>{{#link-to 'player' id}}{{name}}{{/link-to}}</li>
+        {{/each}}
         </ul>
         <button {{action 'addPlayer'}}>Add a player</button>
       </div>
@@ -50,11 +54,9 @@
       <div class="players">
         <h3>Games</h3>
         <ul>
-          <li>{{#link-to 'game' 'g1'}}Game 100{{/link-to}}</li>
-          <li>Game 99</li>
-          <li>Game 98</li>
-          <li>Game 97</li>
-          <li>Game 96</li>
+          {{#each games}}
+          <li>{{#link-to 'game' id}}{{name}}{{/link-to}}</li>
+          {{/each}}
         </ul>
         <button {{action 'addGame'}}>Add a game</button>
       </div>
@@ -94,13 +96,17 @@
       <section class="player-info">
         <h3>Home</h3>
         <ul>
-          <li>{{#link-to 'player' 'p1'}}P1{{/link-to}}</li>
+          {{#each homePlayers}}
+          <li>{{#link-to 'player' id}}{{name}}{{/link-to}}</li>
+          {{/each}}
         </ul>
       </section>
       <section class="player-info">
         <h3>Visitors</h3>
         <ul>
-          <li>{{#link-to 'player' 'p2'}}P2{{/link-to}}</li>
+          {{#each visitorPlayers}}
+          <li>{{#link-to 'player' id}}{{name}}{{/link-to}}</li>
+          {{/each}}
         </ul>
       </section>
     </div>
