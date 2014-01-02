@@ -16,7 +16,8 @@ App.Router.reopen({
 App.Router.map(function() {
     // put your routes here
     this.route('index', { path: '/' });
-    this.resource('leagues', function() { 
+    this.resource('leagues', function() {
+        this.route('new');
         this.resource('league', { path: '/:league_id' });
     });
     this.resource('players', function() {
@@ -27,7 +28,6 @@ App.Router.map(function() {
     });
     //this.route('account', { path: '/account'});
     this.route('about', { path: '/about' });
-
 });
 
 
@@ -61,17 +61,42 @@ App.LeaguesIndexRoute = Ember.Route.extend({
     setupController: function(controller, model) {
         controller.set('model', model);
     }
-})
+});
 
 
-App.LeaguesController = Ember.Controller.extend({
+// App.LeaguesNewRoute = Ember.Route.extend({
+//     model: function() {
+//         return App.League();
+//     },
+//     setupController: function(controller, model) {
+//         controller.set('model', model);
+//     }
+// });
+
+
+App.LeaguesNewController = Ember.Controller.extend({
+    actions: {
+        addLeague: function() {
+            console.log("CREATE A LEAGUE");
+            console.log(this.name);
+            var league = this.store.createRecord('league', {
+                name: this.name
+            });
+            league.save();
+            this.transitionToRoute('leagues');
+        }
+    }
+});
+
+
+App.LeaguesIndexController = Ember.Controller.extend({
     // initial values of controller state:
     someFlag: false,
 
     actions: {
         addLeague: function() {
             //this.set('someFlag', true);
-            console.log("Add a league!");
+            this.transitionToRoute('leagues.new');
         }
     }
 });

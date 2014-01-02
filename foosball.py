@@ -31,6 +31,7 @@ assets = Environment(app)
 #            filters='jsmin', output='gen/packed.js')
 #assets.register('js_all', js)
 
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def index(path):

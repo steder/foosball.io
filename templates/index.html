@@ -36,6 +36,14 @@
     </section>
   </script>
 
+  <script type="text/x-handlebars" id="leagues/new">
+    <section class="leagues wrapper">
+      <h2>Create a new league!</h2>
+      {{input type="text" value=name placeholder="Your awesome league" size="50"}}
+      <button {{action 'addLeague'}}>Make it so!</button>
+    </section>
+  </script>
+
   <script type="text/x-handlebars" id="league">
     <section class="wrapper">
       <h2>{{name}}</h2>
