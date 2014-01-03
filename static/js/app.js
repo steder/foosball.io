@@ -18,13 +18,14 @@ App.Router.map(function() {
     this.route('index', { path: '/' });
     this.resource('leagues', function() {
         this.route('new');
-        this.resource('league', { path: '/:league_id' });
+        this.resource('league', { path: '/:league_id' }, function() {});
+    });
+    this.resource('game', { path: '/leagues/:league_id/games/:game_id' });
+    this.resource('games', { path: '/leagues/:league_id/games'}, function() {
+        this.route("new");
     });
     this.resource('players', function() {
         this.resource('player', { path: '/:player_id' });
-    });
-    this.resource('games', function() {
-        this.resource('game', { path: '/:game_id' });
     });
     //this.route('account', { path: '/account'});
     this.route('about', { path: '/about' });
@@ -64,6 +65,20 @@ App.LeaguesIndexRoute = Ember.Route.extend({
 });
 
 
+App.LeaguesIndexController = Ember.Controller.extend({
+    // initial values of controller state:
+    someFlag: false,
+
+    actions: {
+        addLeague: function() {
+            //this.set('someFlag', true);
+            this.transitionToRoute('leagues.new');
+        }
+    }
+});
+
+
+
 // App.LeaguesNewRoute = Ember.Route.extend({
 //     model: function() {
 //         return App.League();
@@ -89,28 +104,19 @@ App.LeaguesNewController = Ember.Controller.extend({
 });
 
 
-App.LeaguesIndexController = Ember.Controller.extend({
-    // initial values of controller state:
-    someFlag: false,
-
-    actions: {
-        addLeague: function() {
-            //this.set('someFlag', true);
-            this.transitionToRoute('leagues.new');
-        }
-    }
-});
-
-
-App.LeaguesLeagueController = Ember.Controller.extend({
-
-});
-
-
 App.LeagueRoute = Ember.Route.extend({
     model: function(params) {
         console.log("returning a league model...");
         return this.store.find('league', params.league_id);
+    }
+});
+
+
+App.LeagueController = Ember.ObjectController.extend({
+    actions: {
+        addGame: function() {
+            this.transitionToRoute('games.new');
+        }
     }
 });
 
@@ -129,7 +135,17 @@ App.PlayerRoute = Ember.Route.extend({
     model: function(params) {
         console.log("returning a player model...");
         return this.store.find('player', params.player_id);
-    }
+    },
+    /* if you want to customize the parameters passed to a route you need to 
+      override serialize on the route */
+    // serialize: function(model) {
+    //   console.log("serialize");
+    //   console.log(model);
+    //   return {
+    //     league_id: model.get("league"),
+    //     player_id: model.get("id")
+    //   };
+    // }
 });
 
 
@@ -159,10 +175,31 @@ App.Game.FIXTURES = [
         }
 ];
 
-
 App.GameRoute = Ember.Route.extend({
     model: function(params) {
         console.log("returning a game model...");
         return this.store.find('game', params.game_id)
+    },
+    serialize: function(model) {
+      return {
+        league_id: model.get("league").get("id"),
+        game_id: model.get("id")
+      }
+    }
+});
+
+// App.GamesNewRoute = Ember.Route.extend({
+//     model: function() {
+//         return App.Game.create({});
+//     }
+// });
+
+App.GamesNewController = Ember.ObjectController.extend({
+    needs: 'league',
+    actions: {
+        addGame: function() {
+            console.log("adding game");
+            this.transitionToRoute('league', this.league);
+        }
     }
 });

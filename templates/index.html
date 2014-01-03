@@ -2,7 +2,7 @@
 
 {% block content %}
 {% raw %}
-  <script type="text/x-handlebars">
+  <script type="text/x-handlebars" id="application">
     <nav class="group">
         <ul class="navigation">
             <li>{{#link-to 'index'}}Home{{/link-to}}</li>
@@ -51,8 +51,8 @@
       <div class="players">
         <h3>Players</h3>
         <ul>
-        {{#each players}}
-          <li>{{#link-to 'player' id}}{{name}}{{/link-to}}</li>
+        {{#each player in players}}
+          <li>{{#link-to 'player' player}}{{player.name}}{{/link-to}}</li>
         {{/each}}
         </ul>
         <button {{action 'addPlayer'}}>Add a player</button>
@@ -62,8 +62,8 @@
       <div class="players">
         <h3>Games</h3>
         <ul>
-          {{#each games}}
-          <li>{{#link-to 'game' id}}{{name}}{{/link-to}}</li>
+          {{#each game in games}}
+          <li>{{#link-to 'game' game}}{{game.name}}{{/link-to}}</li>
           {{/each}}
         </ul>
         <button {{action 'addGame'}}>Add a game</button>
@@ -86,7 +86,13 @@
     {{outlet}}
   </script>
 
+  <script type="text/x-handlebars" id="games/new">
+    <h2>Create a game</h2>
+    <button {{action 'addGame'}}>Add a game</button>
+  </script>
+
   <script type="text/x-handlebars" id="games/index">
+    <p>Game index placeholder</p>
   </script>
 
   <script type="text/x-handlebars" id="game">
