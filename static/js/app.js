@@ -25,6 +25,7 @@ App.Router.map(function() {
         this.route("new");
     });
     this.resource('players', function() {
+        this.route('new');
         this.resource('player', { path: '/:player_id' });
     });
     //this.route('account', { path: '/account'});
@@ -116,6 +117,9 @@ App.LeagueController = Ember.ObjectController.extend({
     actions: {
         addGame: function() {
             this.transitionToRoute('games.new');
+        },
+        addPlayer: function() {
+            this.transitionToRoute('players.new');
         }
     }
 });
@@ -123,13 +127,22 @@ App.LeagueController = Ember.ObjectController.extend({
 
 App.Player = DS.Model.extend({
   name: DS.attr( 'string' ),
+  leagues: DS.hasMany('league', {async: true})
 });
 
 App.Player.FIXTURES = [
-  { id: 1, name: 'Somebody'},
-  { id: 2, name: 'Someone Else'}
+  { id: 1, name: 'Somebody', leagues: [1]},
+  { id: 2, name: 'Someone Else', leagues: [1]}
 ];
 
+App.PlayersNewController = Ember.ObjectController.extend({
+    actions: {
+        addPlayer: function() {
+            console.log("adding player");
+            this.transitionToRoute('leagues');
+        }
+    }
+});
 
 App.PlayerRoute = Ember.Route.extend({
     model: function(params) {

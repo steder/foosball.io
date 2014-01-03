@@ -75,11 +75,24 @@
     {{outlet}}
   </script>
 
+  <script type="text/x-handlebars" id="players/new">
+    <h2>Create a new player</h2>
+    <button {{action 'addPlayer'}}>Make it so!</button>
+  </script>
+
   <script type="text/x-handlebars" id="players/index">
+    <p>Im a placeholder</p>
   </script>
 
   <script type="text/x-handlebars" id="player">
     <h1>Stats for Player {{name}}</h1>
+    <ul>Leagues
+    {{#each league in leagues}}
+      <li>{{#link-to 'league' league}}{{league.name}}{{/link-to}}</li>
+    {{else}}
+      <li>{{name}} isnt in any leagues</li>
+    {{/each}}
+    </ul>
   </script>
 
   <script type="text/x-handlebars" id="games">
