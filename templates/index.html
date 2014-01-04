@@ -106,7 +106,35 @@
   </script>
 
   <script type="text/x-handlebars" id="games/new">
-    <h2>Create a game</h2>
+    <h2>Start a game in the {{#link-to 'league' league}}{{league.name}}{{/link-to}} league</h2>
+    <p>Home Team</p>
+    <ul>
+      {{#each player in homeTeam}}
+        <li>{{#link-to 'player' player}}{{player.name}}{{/link-to}}
+      {{else}}
+        <li>No home players yet!</li>
+      {{/each}}
+    </ul>
+    <p>Visitor Team</p>
+    <ul>
+      {{#each player in visitorTeam}}
+        <li>{{#link-to 'player' player}}{{player.name}}{{/link-to}}
+      {{else}}
+        <li>No home players yet!</li>
+      {{/each}}
+    </ul>
+    <p class="error">
+      {{error}}
+    </p>
+    {{view Ember.Select
+       content=players
+       optionValuePath="content"
+       optionLabelPath="content.name"
+       value=selectedPlayer
+       prompt="Please select a player"
+     }}
+    {{view Ember.Select content=teams value=selectedTeam prompt="Select a team"}}
+    <button {{action 'addPlayer'}}>Add a player</button>
     <button {{action 'addGame'}}>Add a game</button>
   </script>
 
@@ -117,6 +145,7 @@
   <script type="text/x-handlebars" id="game">
     <div class="wrapper stats">
       <h2>Stats for Game {{name}}</h2>
+      <p>{{#link-to 'league' league}}{{league.name}}{{/link-to}}</p>
       
       <section class="scores">
         <h3>Home Team Score</h3>

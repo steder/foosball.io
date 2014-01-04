@@ -19,6 +19,7 @@ App.Router.map(function() {
     this.resource('leagues', function() {
         this.route('new');
         this.resource('league', { path: '/:league_id' }, function() {});
+
     });
     this.resource('game', { path: '/leagues/:league_id/games/:game_id' });
     this.resource('games', { path: '/leagues/:league_id/games'}, function() {
@@ -109,6 +110,13 @@ App.LeagueRoute = Ember.Route.extend({
     model: function(params) {
         console.log("returning a league model...");
         return this.store.find('league', params.league_id);
+    },
+    setupController: function(controller, model) {
+      console.log("LEAGUE ROUTE SETUP CONTROLLER");
+      console.log(model);
+      var gn = this.controllerFor('gamesNew');
+      console.log(gn);
+      gn.set('league', model);
     }
 });
 
@@ -201,18 +209,64 @@ App.GameRoute = Ember.Route.extend({
     }
 });
 
-// App.GamesNewRoute = Ember.Route.extend({
-//     model: function() {
-//         return App.Game.create({});
-//     }
-// });
+
+App.GamesNewRoute = Ember.Route.extend({
+     model: function(params) {},
+     setupController: function(controller, model) {
+        controller.set('content', []);
+        console.log("TODO: filter players based on league membership");
+        controller.set('players', this.store.find('player'));
+        controller.set('homeTeam', Ember.ArrayProxy.create({content: Ember.A([])}));
+        controller.set('visitorTeam', Ember.ArrayProxy.create({content: Ember.A([])}));
+     }
+});
+
 
 App.GamesNewController = Ember.ObjectController.extend({
-    needs: 'league',
+    // needs: 'league',
+    // league: Ember.computed.alias("controllers.league"),
+    teams: ['home', 'visitors'],
+    selectedPlayer: null,
+    selectedTeam: null,
+    error: null,
     actions: {
         addGame: function() {
             console.log("adding game");
+            console.log("TODO: validate that the game has players on both teams");
+            console.log("LEAGUE");
+            console.log(this.league);
+            console.log("LEAGUE ID");
+            console.log(this.league.id);
+            var game = this.store.createRecord("game", {name: 'new game', 
+                                             homeScore: 0,
+                                             visitorScore: 0,
+                                             league: league_id,
+                                           });
+            game.homePlayers = this.homeTeam;
+            game.visitorPlayers = this.visitorTeam;
+            game.save();
             this.transitionToRoute('league', this.league);
+        },
+        addPlayer: function() {
+            console.log("adding a player to this game");
+            console.log("selectedPlayer:");
+            console.log(this.selectedPlayer);
+            console.log(this.selectedTeam);
+            if (!this.selectedTeam || !this.selectedPlayer) {
+              this.set('error', 'Select a player and their team!');
+              return;
+            } {
+              this.set('error', null);
+            }
+
+            if (this.selectedTeam === 'home') {
+              this.get('homeTeam').pushObject(this.selectedPlayer);
+            } else {
+              this.get('visitorTeam').pushObject(this.selectedPlayer);
+            }
+            console.log("clearing the select boxes");
+            this.set('selectedTeam', null);
+            this.set('selectedPlayer', null);
         }
     }
 });
