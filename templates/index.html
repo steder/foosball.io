@@ -69,7 +69,7 @@
         <h3>Games</h3>
         <ul>
           {{#each game in games}}
-          <li>{{#link-to 'game' game}}{{game.name}}{{/link-to}}</li>
+          <li>{{#link-to 'game' id game}}{{game.name}}{{/link-to}}</li>
           {{/each}}
         </ul>
         <button {{action 'addGame'}}>Add a game</button>

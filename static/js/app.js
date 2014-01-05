@@ -19,12 +19,12 @@ App.Router.map(function() {
     this.resource('leagues', function() {
         this.route('new');
         this.resource('league', { path: '/:league_id' }, function() {});
+        this.resource('games', { path: '/:league_id/games'}, function() {
+          this.resource('game', { path: '/:game_id' });
+          this.route("new");
+      });
+    });
 
-    });
-    this.resource('game', { path: '/leagues/:league_id/games/:game_id' });
-    this.resource('games', { path: '/leagues/:league_id/games'}, function() {
-        this.route("new");
-    });
     this.resource('players', function() {
         this.route('new');
         this.resource('player', { path: '/:player_id' });
@@ -99,8 +99,11 @@ App.LeaguesNewController = Ember.Controller.extend({
             var league = this.store.createRecord('league', {
                 name: this.name
             });
-            league.save();
-            this.transitionToRoute('leagues');
+            var that = this;
+            league.save().then(function(league) {
+              console.log("NEW LEAGUE THEN:");
+              that.transitionToRoute('leagues');
+            });
         }
     }
 });
@@ -110,14 +113,14 @@ App.LeagueRoute = Ember.Route.extend({
     model: function(params) {
         console.log("returning a league model...");
         return this.store.find('league', params.league_id);
-    },
-    setupController: function(controller, model) {
-      console.log("LEAGUE ROUTE SETUP CONTROLLER");
-      console.log(model);
-      var gn = this.controllerFor('gamesNew');
-      console.log(gn);
-      gn.set('league', model);
     }
+    // setupController: function(controller, model) {
+    //   console.log("LEAGUE ROUTE SETUP CONTROLLER");
+    //   console.log(model);
+    //   var gn = this.controllerFor('gamesNew');
+    //   console.log(gn);
+    //   gn.set('league', model);
+    // }
 });
 
 
@@ -156,7 +159,7 @@ App.PlayerRoute = Ember.Route.extend({
     model: function(params) {
         console.log("returning a player model...");
         return this.store.find('player', params.player_id);
-    },
+    }
     /* if you want to customize the parameters passed to a route you need to 
       override serialize on the route */
     // serialize: function(model) {
@@ -179,6 +182,7 @@ App.Game = DS.Model.extend({
     visitorPlayers: DS.hasMany("player", {async: true})
 });
 
+
 App.Game.FIXTURES = [
         {id: 1, name: 'Game 1', 
          homeScore: 3,
@@ -199,19 +203,35 @@ App.Game.FIXTURES = [
 App.GameRoute = Ember.Route.extend({
     model: function(params) {
         console.log("returning a game model...");
-        return this.store.find('game', params.game_id)
-    },
-    serialize: function(model) {
-      return {
-        league_id: model.get("league").get("id"),
-        game_id: model.get("id")
-      }
+        var game = this.store.find('game', params.game_id);
+        console.log(game);
+        return game;
     }
+    // serialize: function(model) {
+    //   return {
+    //     league_id: model.get("league").get("id"),
+    //     game_id: model.get("id")
+    //   }
+    // }
 });
 
 
+// App.GamesRoute = Ember.Router.extend({
+//   model: function(params) {
+//     console.log("games route model");
+//     return this.store.find('league', params.league_id);
+//   },
+//   setupController: function(controller, model) {
+//     console.log("GamesRoute controller");
+//   }
+// });
+
+
 App.GamesNewRoute = Ember.Route.extend({
-     model: function(params) {},
+     model: function(params) {
+        console.log("games new route params:");
+        console.log(params);
+     },
      setupController: function(controller, model) {
         controller.set('content', []);
         console.log("TODO: filter players based on league membership");
@@ -223,8 +243,8 @@ App.GamesNewRoute = Ember.Route.extend({
 
 
 App.GamesNewController = Ember.ObjectController.extend({
-    // needs: 'league',
-    // league: Ember.computed.alias("controllers.league"),
+    needs: ['league'],
+    league: Ember.computed.alias("controllers.league"),
     teams: ['home', 'visitors'],
     selectedPlayer: null,
     selectedTeam: null,
@@ -234,18 +254,23 @@ App.GamesNewController = Ember.ObjectController.extend({
             console.log("adding game");
             console.log("TODO: validate that the game has players on both teams");
             console.log("LEAGUE");
-            console.log(this.league);
+            var league = this.get('league');
             console.log("LEAGUE ID");
-            console.log(this.league.id);
+            var league_id = league.get('id');
             var game = this.store.createRecord("game", {name: 'new game', 
                                              homeScore: 0,
                                              visitorScore: 0,
-                                             league: league_id,
                                            });
             game.homePlayers = this.homeTeam;
             game.visitorPlayers = this.visitorTeam;
-            game.save();
-            this.transitionToRoute('league', this.league);
+            console.log(league.get("games"));
+            league.get('games').pushObject(game);
+            var that = this;
+            game.save().then(function(game) {
+              console.log("NEW GAME THEN");
+              that.transitionToRoute('league', league_id);
+              console.log("TRANSITIONED?");
+            });
         },
         addPlayer: function() {
             console.log("adding a player to this game");
