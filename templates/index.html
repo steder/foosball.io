@@ -2,7 +2,7 @@
 
 {% block content %}
 {% raw %}
-  <script type="text/x-handlebars">
+  <script type="text/x-handlebars" id="application">
     <nav class="group">
         <ul class="navigation">
             <li>{{#link-to 'index'}}Home{{/link-to}}</li>
@@ -11,6 +11,12 @@
         </ul>
     </nav>
     {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="index">
+    <section class="wrapper group">
+      <h2>Foosball, jerks!</h2>
+    </section>
   </script>
 
   <script type="text/x-handlebars" id="about">
@@ -27,9 +33,20 @@
     <section class="leagues wrapper">
       <h2>Your Leagues</h2>
       <ol>
-        <li>{{#link-to 'league' 'skinnyscrub'}}Skinny Scrub League{{/link-to}}</li>
+      {{#each model}}
+        <li>{{#link-to 'league' id}}{{name}}{{/link-to}}</li>
+      {{/each}}
+
       </ol>
       <button {{action 'addLeague'}}>Add a league</button>
+    </section>
+  </script>
+
+  <script type="text/x-handlebars" id="leagues/new">
+    <section class="leagues wrapper">
+      <h2>Create a new league!</h2>
+      {{input type="text" value=name placeholder="Your awesome league" size="50"}}
+      <button {{action 'addLeague'}}>Make it so!</button>
     </section>
   </script>
 
@@ -40,8 +57,9 @@
       <div class="players">
         <h3>Players</h3>
         <ul>
-          <li>{{#link-to 'player' 'p1'}}P1{{/link-to}}</li>
-          <li>{{#link-to 'player' 'p2'}}P2{{/link-to}}</li>
+        {{#each player in players}}
+          <li>{{#link-to 'player' player}}{{player.name}}{{/link-to}}</li>
+        {{/each}}
         </ul>
         <button {{action 'addPlayer'}}>Add a player</button>
       </div>
@@ -50,11 +68,9 @@
       <div class="players">
         <h3>Games</h3>
         <ul>
-          <li>{{#link-to 'game' 'g1'}}Game 100{{/link-to}}</li>
-          <li>Game 99</li>
-          <li>Game 98</li>
-          <li>Game 97</li>
-          <li>Game 96</li>
+          {{#each game in games}}
+          <li>{{#link-to 'game' id game}}{{game.name}}{{/link-to}}</li>
+          {{/each}}
         </ul>
         <button {{action 'addGame'}}>Add a game</button>
       </div>
@@ -65,23 +81,71 @@
     {{outlet}}
   </script>
 
+  <script type="text/x-handlebars" id="players/new">
+    <h2>Create a new player</h2>
+    <button {{action 'addPlayer'}}>Make it so!</button>
+  </script>
+
   <script type="text/x-handlebars" id="players/index">
+    <p>Im a placeholder</p>
   </script>
 
   <script type="text/x-handlebars" id="player">
     <h1>Stats for Player {{name}}</h1>
+    <ul>Leagues
+    {{#each league in leagues}}
+      <li>{{#link-to 'league' league}}{{league.name}}{{/link-to}}</li>
+    {{else}}
+      <li>{{name}} isnt in any leagues</li>
+    {{/each}}
+    </ul>
   </script>
 
   <script type="text/x-handlebars" id="games">
     {{outlet}}
   </script>
 
+  <script type="text/x-handlebars" id="games/new">
+    <h2>Start a game in the {{#link-to 'league' league}}{{league.name}}{{/link-to}} league</h2>
+    <p>Home Team</p>
+    <ul>
+      {{#each player in homeTeam}}
+        <li>{{#link-to 'player' player}}{{player.name}}{{/link-to}}
+      {{else}}
+        <li>No home players yet!</li>
+      {{/each}}
+    </ul>
+    <p>Visitor Team</p>
+    <ul>
+      {{#each player in visitorTeam}}
+        <li>{{#link-to 'player' player}}{{player.name}}{{/link-to}}
+      {{else}}
+        <li>No home players yet!</li>
+      {{/each}}
+    </ul>
+    <p class="error">
+      {{error}}
+    </p>
+    {{view Ember.Select
+       content=players
+       optionValuePath="content"
+       optionLabelPath="content.name"
+       value=selectedPlayer
+       prompt="Please select a player"
+     }}
+    {{view Ember.Select content=teams value=selectedTeam prompt="Select a team"}}
+    <button {{action 'addPlayer'}}>Add a player</button>
+    <button {{action 'addGame'}}>Add a game</button>
+  </script>
+
   <script type="text/x-handlebars" id="games/index">
+    <p>Game index placeholder</p>
   </script>
 
   <script type="text/x-handlebars" id="game">
     <div class="wrapper stats">
       <h2>Stats for Game {{name}}</h2>
+      <p>{{#link-to 'league' league}}{{league.name}}{{/link-to}}</p>
       
       <section class="scores">
         <h3>Home Team Score</h3>
@@ -94,13 +158,17 @@
       <section class="player-info">
         <h3>Home</h3>
         <ul>
-          <li>{{#link-to 'player' 'p1'}}P1{{/link-to}}</li>
+          {{#each homePlayers}}
+          <li>{{#link-to 'player' id}}{{name}}{{/link-to}}</li>
+          {{/each}}
         </ul>
       </section>
       <section class="player-info">
         <h3>Visitors</h3>
         <ul>
-          <li>{{#link-to 'player' 'p2'}}P2{{/link-to}}</li>
+          {{#each visitorPlayers}}
+          <li>{{#link-to 'player' id}}{{name}}{{/link-to}}</li>
+          {{/each}}
         </ul>
       </section>
     </div>
@@ -113,6 +181,7 @@
   <script src="{{ url_for('static', filename='js/libs/jquery-1.10.2.js') }}"></script>
   <script src="{{ url_for('static', filename='js/libs/handlebars-1.1.2.js') }}"></script>
   <script src="{{ url_for('static', filename='js/libs/ember-1.2.0.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/libs/ember-data-1.0.0-beta.4.js') }}"></script>
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
   <!-- to activate the test runner, add the "?test" query string parameter -->
   <script src="{{ url_for('static', filename='tests/runner.js') }}"></script>

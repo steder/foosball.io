@@ -108,3 +108,6 @@ button {
   content: "";
   display: table;
   clear: both; }
+
+.error {
+  color: #ff0000;}
