@@ -160,7 +160,7 @@ App.PlayerRoute = Ember.Route.extend({
         console.log("returning a player model...");
         return this.store.find('player', params.player_id);
     }
-    /* if you want to customize the parameters passed to a route you need to 
+    /* if you want to customize the parameters passed to a route you need to
       override serialize on the route */
     // serialize: function(model) {
     //   console.log("serialize");
@@ -184,7 +184,7 @@ App.Game = DS.Model.extend({
 
 
 App.Game.FIXTURES = [
-        {id: 1, name: 'Game 1', 
+        {id: 1, name: 'Game 1',
          homeScore: 3,
          visitorScore: 10,
          league: 1,
@@ -257,12 +257,50 @@ App.GamesNewController = Ember.ObjectController.extend({
             var league = this.get('league');
             console.log("LEAGUE ID");
             var league_id = league.get('id');
-            var game = this.store.createRecord("game", {name: 'new game', 
+            var game = this.store.createRecord("game", {name: 'new game',
                                              homeScore: 0,
                                              visitorScore: 0,
+                                             homePlayers: this.get('homeTeam'),
+                                             visitorPlayers: this.get('visitorTeam')
                                            });
-            game.homePlayers = this.homeTeam;
-            game.visitorPlayers = this.visitorTeam;
+            // looks like you can't set a list like this:
+            /*game.homePlayers = this.get('homeTeam');
+            game.visitorPlayers = this.get('visitorTeam');
+            */
+
+            /*game.set('homePlayers', this.get('homeTeam'));
+            game.set('visitorPlayers', this.get('visitorTeam'));
+*/
+            //game.set('homePlayers', [1]);
+            //game.set('visitorPlayers', [2]);
+
+            //game.get('homePlayers').then(function(players) {players.pushObjects(this.homeTeam);});
+
+            var homeTeam = this.get('homeTeam');
+            game.get("homePlayers").then(function(players) {
+              console.log("getting homePlayers promise:");
+              console.log(players);
+              homeTeam.forEach(function(player) {
+                console.log("adding player to hometeam:");
+                console.log(player);
+                //players.pushObject(player);
+                players.addObject(player);
+              });
+            });
+
+            // this.get('homeTeam').forEach(function(player) {
+            //   console.log("adding a player to the hometeam");
+            //   game.get('homePlayers').then(function(field) {
+            //     field.pushObject(player);
+            //   });
+            // });
+            // this.get('visitorTeam').forEach(function(player) {
+            //   console.log("adding a player to this games visitor team");
+            //   game.get('visitorPlayers').then(function(field) {
+            //     field.pushObject(player);
+            //   });
+            // });
+
             console.log(league.get("games"));
             league.get('games').pushObject(game);
             var that = this;
@@ -295,3 +333,4 @@ App.GamesNewController = Ember.ObjectController.extend({
         }
     }
 });
+
