@@ -1,0 +1,10 @@
+<section class="leagues wrapper">
+  <h2>Your Leagues</h2>
+  <ol>
+    {{#each model}}
+    <li>{{#link-to 'league' id}}{{name}}{{/link-to}}</li>
+    {{/each}}
+
+  </ol>
+  <button {{action 'addLeague'}}>Add a league</button>
+</section>
