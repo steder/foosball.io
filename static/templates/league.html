@@ -1,0 +1,24 @@
+<section class="wrapper">
+  <h2>{{name}}</h2>
+  <p>Welcome to the {{name}} league!</p>
+  <div class="players">
+    <h3>Players</h3>
+    <ul>
+      {{#each player in players}}
+      <li>{{#link-to 'player' player}}{{player.name}}{{/link-to}}</li>
+      {{/each}}
+    </ul>
+    <button {{action 'addPlayer'}}>Add a player</button>
+  </div>
+</section>
+<section>
+  <div class="players">
+    <h3>Games</h3>
+    <ul>
+      {{#each game in games}}
+      <li>{{#link-to 'game' id game}}{{game.name}}{{/link-to}}</li>
+      {{/each}}
+    </ul>
+    <button {{action 'addGame'}}>Add a game</button>
+  </div>
+</section>
