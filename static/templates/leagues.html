@@ -2,8 +2,8 @@
   <h2>Your Leagues</h2>
   <ol>
     <li ng-repeat="league in leagues">
-      <a href="/leagues/{{ league.id }}">{{ league.name }}</a>
+      <a ng-href="/leagues/{{ league.id }}">{{ league.name }}</a>
     </li>
   </ol>
-  <button>Add a league</button>
+  <button go-click="/leagues/new">Add a league</button>
 </section>

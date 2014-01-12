@@ -1,0 +1,20 @@
+<section class="leagues wrapper">
+  <h2>Create a new league!</h2>
+  <form name="NewLeague" ng-controller="NewLeagueCtrl">
+    <input type="text" name="input" ng-model="text"
+           placeholder="Your awesome league name..." size="50"
+           required ng-trim="false">
+
+    <span class="error" ng-show="NewLeague.input.$error.required">
+      Required!</span>
+    <span class="error" ng-show="NewLeague.input.$error.pattern">
+      Single word only!</span>
+
+    <tt>text = {{text}}</tt><br/>
+    <tt>NewLeague.input.$valid = {{NewLeague.input.$valid}}</tt><br/>
+    <tt>NewLeague.input.$error = {{NewLeague.input.$error}}</tt><br/>
+    <tt>NewLeague.$valid = {{NewLeague.$valid}}</tt><br/>
+    <tt>NewLeague.$error.required = {{!!NewLeague.$error.required}}</tt><br/>
+    <button ng-click="addLeague()">Make it so!</button>
+  </form>
+</section>

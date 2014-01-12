@@ -1,0 +1,28 @@
+<div class="wrapper stats">
+  <h2>Stats for Game {{name}}</h2>
+  <p><a href="/leagues/{{league.id}}">{{league.name}}</a></p>
+  <section class="scores">
+    <h3>Home Team Score</h3>
+    <span>{{homeScore}}</span>
+  </section>
+  <section class="scores">
+    <h3>Visiting Team Score</h3>
+    <span>{{visitingScore}}</span>
+  </section>
+  <section class="player-info">
+    <h3>Home</h3>
+    <ul>
+      <li ng-repeat="player in homeTeam">
+        <a href="/players/{{player.id}}">{{player.name}}</a>
+      </li>
+    </ul>
+  </section>
+  <section class="player-info">
+    <h3>Visitors</h3>
+    <ul>
+      <li ng-repeat="player in visitingTeam">
+        <a href="/players/{{player.id}}">{{player.name}}</a>
+      </li>
+    </ul>
+  </section>
+</div>
