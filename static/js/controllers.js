@@ -17,11 +17,14 @@ FoosControllers.controller("LeagueCtrl", ["$scope", function($scope) {
 
 
 FoosControllers.controller("NewLeagueCtrl", ["$scope", "$location", function($scope, $location) {
-    $scope.text = "";
+    $scope.shortName = "";
+    $scope.displayName = "";
 
     $scope.addLeague = function() {
         console.log("TODO: Create league '" + $scope.text + "' for real");
         console.log("TODO: investigate flash messages?");
         $location.path("/leagues/3");
     };
+    $scope.validShortName = /^\w+$/;
+    $scope.validDisplayName = /^[\w- ]+$/;
 }]);

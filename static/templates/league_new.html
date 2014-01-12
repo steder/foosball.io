@@ -1,14 +1,36 @@
 <section class="leagues wrapper">
   <h2>Create a new league!</h2>
   <form name="NewLeague" ng-controller="NewLeagueCtrl">
-    <input type="text" name="input" ng-model="text"
-           placeholder="Your awesome league name..." size="50"
+    <input type="text"
+           name="shortName"
+           ng-model="shortName"
+           placeholder="Your awesome league short name..."
+           ng-minlength="1"
+           ng-maxlength="15"
+           ng-pattern="validShortName"
            required ng-trim="false">
 
-    <span class="error" ng-show="NewLeague.input.$error.required">
+    <span class="error" ng-show="NewLeague.shortName.$error.required">
       Required!</span>
-    <span class="error" ng-show="NewLeague.input.$error.pattern">
-      Single word only!</span>
+    <span class="error" ng-show="NewLeague.shortName.$error.pattern">
+      A-Z, 0-9, and _ only</span>
+
+    <br/>
+    <input type="text"
+           name="displayName"
+           ng-model="displayName"
+           placeholder="Your awesome league name..."
+           ng-minlength="1"
+           ng-maxlength="50"
+           ng-pattern="validDisplayName"
+           required ng-trim="false">
+
+    <span class="error" ng-show="NewLeague.displayName.$error.required">
+      Required!</span>
+    <span class="error" ng-show="NewLeague.displayName.$error.pattern">
+      A-Z, 0-9, _, -, and space only</span>
+
+    <br/>
 
     <tt>text = {{text}}</tt><br/>
     <tt>NewLeague.input.$valid = {{NewLeague.input.$valid}}</tt><br/>
