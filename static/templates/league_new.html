@@ -4,9 +4,10 @@
     <input type="text"
            name="shortName"
            ng-model="shortName"
-           placeholder="Your awesome league short name..."
+           placeholder="YOUR_LEAGUE"
            ng-minlength="1"
            ng-maxlength="15"
+           size="25"
            ng-pattern="validShortName"
            required ng-trim="false">
 
@@ -19,9 +20,10 @@
     <input type="text"
            name="displayName"
            ng-model="displayName"
-           placeholder="Your awesome league name..."
+           placeholder="Your Awesome League"
            ng-minlength="1"
            ng-maxlength="50"
+           size="50"
            ng-pattern="validDisplayName"
            required ng-trim="false">
 
