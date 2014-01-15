@@ -22,8 +22,14 @@ var PLAYER_FIXTURES = [
 
 
 var GAME_FIXTURES = [
-    {id: 100, name: "Game 1"},
-    {id: 200, name: "Game 2"}
+    {id: 100, name: "Game 1", homeScore: 3, visitorScore: 10,
+     homeTeam: [{id: 10, name: "Dude"}],
+     visitorTeam: [{id: 20, name: "Bro"}]
+    },
+    {id: 200, name: "Game 2", homeScore: 10, visitorScore: 7,
+     homeTeam: [{id: 10, name: "Dude"}],
+     visitorTeam: [{id: 20, name: "Bro"}]
+     }
 ];
 
 
@@ -96,4 +102,30 @@ FoosControllers.controller("NewLeagueCtrl", ["$scope", "$location", function($sc
     };
     $scope.validShortName = /^\w+$/;
     $scope.validDisplayName = /^[\w- ]+$/;
+}]);
+
+
+FoosControllers.controller("PlayerCtrl", ["$scope", "$route", "$location", function($scope, $route, $location) {
+    var player_id = $route.current.params.player_id;
+    var player = undefined;
+    for (var i = 0; i < PLAYER_FIXTURES.length; i++) {
+        if (PLAYER_FIXTURES[i].id == player_id) {
+            player = PLAYER_FIXTURES[i];
+        }
+    }
+    console.log("player: " + player);
+    $scope.player = player;
+}]);
+
+
+FoosControllers.controller("GameCtrl", ["$scope", "$route", "$location", function($scope, $route, $location) {
+    var game_id = $route.current.params.game_id;
+    var game = undefined;
+    for (var i = 0; i < GAME_FIXTURES.length; i++) {
+        if (GAME_FIXTURES[i].id == game_id) {
+            game = GAME_FIXTURES[i];
+        }
+    }
+    console.log("game: " + game);
+    $scope.game = game;
 }]);

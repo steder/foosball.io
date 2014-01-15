@@ -29,9 +29,11 @@ FoosApp.config(['$routeProvider', '$locationProvider',
       }).
       when('/games/:game_id', {
           templateUrl: '/static/templates/game.html',
+          controller: 'GameCtrl',
       }).
       when('/players/:player_id', {
-          templateUrl: '/static/templates/player.html'
+          templateUrl: '/static/templates/player.html',
+          controller: 'PlayerCtrl',
       }).
       otherwise({
         templateUrl: '/static/templates/404.html',

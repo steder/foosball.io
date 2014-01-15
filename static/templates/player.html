@@ -1,7 +1,7 @@
-<h1>Stats for Player {{name}}</h1>
+<h1>Stats for Player {{player.name}}</h1>
 <ul>Leagues
   <li ng-repeat="league in leagues">
     <a ng-href="/leagues/{{league.id}}">{{league.name}}</a>
   </li>
-  <li ng-hide="leagues.length">{{name}} isn't in any leagues, yet!</li>
+  <li ng-hide="leagues.length">{{player.name}} isn't in any leagues, yet!</li>
 </ul>
