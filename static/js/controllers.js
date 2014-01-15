@@ -27,13 +27,13 @@ var GAME_FIXTURES = [
 ];
 
 
-
 FoosControllers.controller("LeaguesCtrl", ['$scope', function($scope) {
     $scope.leagues = LEAGUE_FIXTURES;
 }]);
 
 
-FoosControllers.controller("LeagueCtrl", ["$scope", "$route", "$location", function($scope, $route, $location) {
+FoosControllers.controller("LeagueCtrl", ["$scope", "$route", "$location", "flash",
+                                          function($scope, $route, $location, flash) {
     console.log($route.current.params);
     console.log($route.current.params.league_id);
     var league_id = parseInt($route.current.params.league_id);
@@ -48,7 +48,9 @@ FoosControllers.controller("LeagueCtrl", ["$scope", "$route", "$location", funct
 
     if (!league) {
         // there was no league, render 404?
-        console.log("TODO: render 404 as this league didn't exist");
+        console.log("TODO: render 404 as this league didn't exist?");
+        flash("error", "Sorry, /leagues/" + league_id + " doesn't exist!");
+        $location.path("/leagues");
     }
 
     console.log("league: " + league);

@@ -2,6 +2,7 @@ var FoosApp = angular.module('FoosApp', [
   'ngRoute',
   'FoosControllers',
   'FoosDirectives',
+  'flash',
 ]);
 
 
