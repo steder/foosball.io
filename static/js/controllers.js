@@ -24,11 +24,13 @@ var PLAYER_FIXTURES = [
 var GAME_FIXTURES = [
     {id: 100, name: "Game 1", homeScore: 3, visitorScore: 10,
      homeTeam: [{id: 10, name: "Dude"}],
-     visitorTeam: [{id: 20, name: "Bro"}]
+     visitorTeam: [{id: 20, name: "Bro"}],
+     active: true
     },
     {id: 200, name: "Game 2", homeScore: 10, visitorScore: 7,
      homeTeam: [{id: 10, name: "Dude"}],
-     visitorTeam: [{id: 20, name: "Bro"}]
+     visitorTeam: [{id: 20, name: "Bro"}],
+     active: false
      }
 ];
 
