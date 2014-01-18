@@ -1,0 +1,31 @@
+//
+// FOOSBALL.io
+// 
+//
+// _base.scss
+//
+
+// Typography
+$fancy: 'Oleo Script Swash Caps', cursive;
+$headings: 'Varela Round', sans-serif;
+$body: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+// Colors
+$background-color: #F5FAEB; // cream
+$text-color: #F5FAEB;
+$text-color-dark: #0F3B4D; // dark blue
+$text-color-light: #999; 
+$box-color: #AADC46; // light greeb
+$orange: #FC5C47;
+$drkgrn: #506428;
+// off-white #F5FAEB
+// light green: #AADC46
+// dark green: #506428
+// dark blue: #0F3B4D
+
+
+// Effects
+@mixin easing ($duration){
+  -webkit-transition: all $duration cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transition:         all $duration cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}

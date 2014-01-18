@@ -1,0 +1,50 @@
+//
+// FOOSBALL.io
+// 
+//
+// _layout.scss
+//
+
+.container {
+	margin: 0 auto;
+	max-width: 960px;
+	width: 90%
+}
+
+.flat-nav {
+	margin: 1rem auto 0;
+	width: 90%;
+	ul {
+		list-style-type: none;
+		padding: 0;
+	}
+
+	li {
+		float:left;
+		margin: 0;
+		padding: 0;
+	}
+	
+	a {
+		display: block;
+		font-family: $headings;
+		font-weight: 400;
+		padding: 0 .5rem;
+		text-decoration: none;
+		text-transform: uppercase;
+		@include easing(100ms);
+		//@include text-shadow(rgba(255,255,255,.4) -1px -1px 0, rgb(0,0,0) -1px -1px 1px);
+		&:hover {
+			background: $background-color;
+			color: $drkgrn;
+		}
+	}
+}
+
+@media (min-width: 50em) {
+	.flat-nav {
+		float:right;
+		margin: .75% 0 0;
+		width: auto;
+	}
+}
