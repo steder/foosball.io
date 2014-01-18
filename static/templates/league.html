@@ -9,7 +9,10 @@
       </li>
       <li ng-show="!players">no players yet!</li>
     </ul>
-    <button>Add a player</button>
+    <select ng-model="availablePlayer"
+            ng-options="p.name for p in availablePlayers"></select>
+    <button>Add Player</button>
+    <button go-click="/players/new">New player</button>
   </div>
 </section>
 <section>
@@ -21,6 +24,6 @@
       </li>
       <li ng-show="!games">no games yet!</li>
     </ul>
-    <button>Add a game</button>
+    <button go-click="/games/new">New game</button>
   </div>
 </section>

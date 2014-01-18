@@ -17,8 +17,9 @@ var LEAGUE_FIXTURES = [
 
 var PLAYER_FIXTURES = [
     {id: 10, name: "Dude"},
-    {id: 20, name: "Bro"}
-]
+    {id: 20, name: "Bro"},
+    {id: 30, name: "Yolo"}
+];
 
 
 var GAME_FIXTURES = [
@@ -31,7 +32,7 @@ var GAME_FIXTURES = [
      homeTeam: [{id: 10, name: "Dude"}],
      visitorTeam: [{id: 20, name: "Bro"}],
      active: false
-     }
+    }
 ];
 
 
@@ -41,7 +42,7 @@ FoosControllers.controller("LeaguesCtrl", ['$scope', function($scope) {
 
 
 FoosControllers.controller("LeagueCtrl", ["$scope", "$route", "$location", "flash",
-                                          function($scope, $route, $location, flash) {
+function($scope, $route, $location, flash) {
     console.log($route.current.params);
     console.log($route.current.params.league_id);
     var league_id = parseInt($route.current.params.league_id);
@@ -63,6 +64,7 @@ FoosControllers.controller("LeagueCtrl", ["$scope", "$route", "$location", "flas
 
     console.log("league: " + league);
     $scope.league = league;
+
     // lookup players:
     $scope.players = [];
     for (var player_idx = 0; player_idx < PLAYER_FIXTURES.length; player_idx++) {
@@ -73,6 +75,7 @@ FoosControllers.controller("LeagueCtrl", ["$scope", "$route", "$location", "flas
             }
         }
     }
+
     $scope.games = [];
     for (var game_idx = 0; game_idx < GAME_FIXTURES.length; game_idx++) {
         for (var league_idx = 0; league_idx < league.game_ids.length; league_idx++) {
@@ -82,6 +85,7 @@ FoosControllers.controller("LeagueCtrl", ["$scope", "$route", "$location", "flas
             }
         }
     }
+    $scope.availablePlayers = [PLAYER_FIXTURES[2],];
 }]);
 
 
@@ -99,8 +103,49 @@ FoosControllers.controller("NewLeagueCtrl", ["$scope", "$location", function($sc
             game_ids: []
         };
         LEAGUE_FIXTURES.push(new_league);
-        console.log("TODO: investigate flash messages?");
         $location.path("/leagues/" + new_league.id);
+    };
+    $scope.validShortName = /^\w+$/;
+    $scope.validDisplayName = /^[\w- ]+$/;
+}]);
+
+
+FoosControllers.controller("NewGameCtrl", ["$scope", "$location", function($scope, $location) {
+    $scope.shortName = "";
+    $scope.displayName = "";
+
+    $scope.addGame = function() {
+        console.log("TODO: Create game '" + $scope.text + "' for real");
+        var new_game = {
+            id: GAME_FIXTURES.length + 1,
+            shortName: $scope.shortName,
+            name: $scope.displayName,
+            homeScore: 0,
+            visitorScore: 0,
+            homeTeam: [],
+            visitorTeam: []
+        };
+        GAME_FIXTURES.push(new_game);
+        $location.path("/games/" + new_game.id);
+    };
+    $scope.validShortName = /^\w+$/;
+    $scope.validDisplayName = /^[\w- ]+$/;
+}]);
+
+
+FoosControllers.controller("NewPlayerCtrl", ["$scope", "$location", function($scope, $location) {
+    $scope.shortName = "";
+    $scope.displayName = "";
+
+    $scope.addPlayer = function() {
+        console.log("TODO: Create player '" + $scope.text + "' for real");
+        var new_player = {
+            id: PLAYER_FIXTURES.length + 1,
+            shortName: $scope.shortName,
+            name: $scope.displayName,
+        };
+        PLAYER_FIXTURES.push(new_player);
+        $location.path("/players/" + new_player.id);
     };
     $scope.validShortName = /^\w+$/;
     $scope.validDisplayName = /^[\w- ]+$/;

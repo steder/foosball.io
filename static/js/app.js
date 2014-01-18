@@ -27,9 +27,15 @@ FoosApp.config(['$routeProvider', '$locationProvider',
           templateUrl: '/static/templates/league.html',
           controller: 'LeagueCtrl',
       }).
+      when('/games/new', {
+          templateUrl: '/static/templates/game_new.html',
+      }).
       when('/games/:game_id', {
           templateUrl: '/static/templates/game.html',
           controller: 'GameCtrl',
+      }).
+      when('/players/new', {
+          templateUrl: '/static/templates/player_new.html',
       }).
       when('/players/:player_id', {
           templateUrl: '/static/templates/player.html',

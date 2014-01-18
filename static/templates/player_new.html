@@ -1,0 +1,44 @@
+<section class="players wrapper">
+  <h2>Create a new player!</h2>
+  <form name="NewPlayer" ng-controller="NewPlayerCtrl">
+    <input type="text"
+           name="shortName"
+           ng-model="shortName"
+           placeholder="YOUR_PLAYER"
+           ng-minlength="1"
+           ng-maxlength="15"
+           size="25"
+           ng-pattern="validShortName"
+           required ng-trim="false">
+
+    <span class="error" ng-show="NewPlayer.shortName.$error.required">
+      Required!</span>
+    <span class="error" ng-show="NewPlayer.shortName.$error.pattern">
+      A-Z, 0-9, and _ only</span>
+
+    <br/>
+    <input type="text"
+           name="displayName"
+           ng-model="displayName"
+           placeholder="Your Awesome Player"
+           ng-minlength="1"
+           ng-maxlength="50"
+           size="50"
+           ng-pattern="validDisplayName"
+           required ng-trim="false">
+
+    <span class="error" ng-show="NewPlayer.displayName.$error.required">
+      Required!</span>
+    <span class="error" ng-show="NewPlayer.displayName.$error.pattern">
+      A-Z, 0-9, _, -, and space only</span>
+
+    <br/>
+
+    <tt>text = {{text}}</tt><br/>
+    <tt>NewPlayer.input.$valid = {{NewPlayer.input.$valid}}</tt><br/>
+    <tt>NewPlayer.input.$error = {{NewPlayer.input.$error}}</tt><br/>
+    <tt>NewPlayer.$valid = {{NewPlayer.$valid}}</tt><br/>
+    <tt>NewPlayer.$error.required = {{!!NewPlayer.$error.required}}</tt><br/>
+    <button ng-click="addPlayer()">Make it so!</button>
+  </form>
+</section>
