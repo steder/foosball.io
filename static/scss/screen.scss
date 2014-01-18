@@ -11,47 +11,59 @@
 // IMPORTS & VARIABLES
 
 @import "compass";
-
+@import "base";
+@import "layout";
 // ------------------------------------------------------------------------------------------------------
 // PAGE STYLES
 
 body {
-    //font-family: $font-family;
-    font-weight: normal;
-    //color: $text-color;
-    //background: $background-color;
-    margin: 0; padding: 3em 0;
+  font-family: $body;
+  font-weight: normal;
+  color: $text-color-dark;
+  background: $background-color;
+  margin: 0; 
+  padding: 0;
 }
 
 section {
-    padding-top: 3em;
-    @include clearfix;
+  padding-top: 3em;
+  @include clearfix;
 }
 
 p {
-    @include adjust-font-size-to(16px, 1);
-    padding: 0;
-    margin: 1.5em 0;
+  @include adjust-font-size-to(16px, 1);
+  padding: 0;
+  margin: 1.5em 0;
 }
 
 h1 {
-    display: block;
-    @include adjust-font-size-to(32px, 1);
-    //font-family: $font-family;
-    font-weight: 200;
-    color: #333;
-    text-transform: uppercase;
-    padding: 0;
+  color: $orange;
+  @include adjust-font-size-to(32px, 1);
+  font-family: $fancy;
+  font-weight: 200;
+  margin: 0;
+  padding: 4% 0 0;
+  text-align: center;
 }
 
 .box {
-    display: block;
-    //background: $box-color;
-    //color: $background-color;
-    padding: 0em 1.5em;
-    margin-bottom: 1.5em;
-    @include border-radius(4px);
-    @include clearfix;
+  display: block;
+  background: $box-color;
+  color: $background-color;
+  padding: 0em 1.5em;
+  margin-bottom: 1.5em;
+  @include border-radius(4px);
+  @include clearfix;
 }
 
-h1 {font-size:100px;}
+#menu {
+  @extend .flat-nav;
+}
+
+@media (min-width: 50em) {
+  h1 {
+    float: left;
+    padding: 2% 0 0;
+    text-align: left;
+  }
+}

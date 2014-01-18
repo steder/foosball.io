@@ -23,9 +23,25 @@
   <script src="{{url_for('static', filename='js/lib/angular_flash.js')}}"></script>
   </head>
   <body>
-	<header>
-		<h1 class="wrapper">foosball.io</h1>
+	<header class="container">
+		<h1>foosball.io</h1>
+    <nav id="menu" role="navigation">
+      <ul>
+        <li>
+          <a ng-class="{ active: $location.path() =='/' }" href="/">
+            Home</a>
+        </li>
+        <li><a ng-class="{ active: $location.path() =='/about' }" href="/about">
+            About</a>
+        </li>
+        <li>
+          <a ng-class="{ active: $location.path() =='/leagues' }" href="/leagues">
+            Leagues</a>
+        </li>
+      </ul>
+    </nav>
 	</header>
+  
   {% block content %}
   {% endblock %}
   {% block javascript %}
