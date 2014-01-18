@@ -1,0 +1,118 @@
+<div class="wrapper stats">
+  <h2>Stats for Game {{game.name}}</h2>
+  <p><a href="/leagues/{{league.id}}">{{league.name}}</a></p>
+  <section class="scores">
+    <h3>Home Team Score</h3>
+    <span>{{game.homeScore}}</span>
+    <span ng-show="game.active">
+      <button ng-click="game.homeScore = game.homeScore + 1">+</button>
+      <button ng-click="game.homeScore = game.homeScore - 1">-</button>
+    </span>
+  </section>
+  <section class="scores">
+    <h3>Visiting Team Score</h3>
+    <span>{{game.visitorScore}}</span>
+    <span ng-show="game.active">
+      <button ng-click="game.visitorScore = game.visitorScore + 1">+</button>
+      <button ng-click="game.visitorScore = game.visitorScore - 1">-</button>
+    </span>
+  </section>
+</div>
+<div class="wrapper stats">
+  <section class="player-info">
+    <h3>Home</h3>
+    <ul>
+      <li ng-repeat="player in game.homeTeam">
+        <a href="/players/{{player.id}}">{{player.name}}</a>
+        <div class="stats">
+          <p ng-init="goals=0">{{goals}}</p>
+          <p ng-init="blocks=0">{{blocks}}</p>
+          <p ng-init="assists=0">{{assists}}</p>
+          <p ng-init="ungoals=0">{{ungoals}}</p>
+          <p ng-init="dunks=0">{{dunks}}</p>
+          <p ng-init="atws=0">{{atws}}</p>
+        </div>
+        <div ng-show="game.active">
+          <span>
+            Goals
+            <button ng-click="goals = goals + 1">+</button>
+            <button ng-click="goals = goals - 1">-</button>
+          </span>
+          <span>
+            Blocks
+            <button ng-click="blocks = blocks + 1">+</button>
+            <button ng-click="blocks = blocks - 1">-</button>
+          </span>
+          <span>
+            Assists
+            <button ng-click="assists = assists + 1">+</button>
+            <button ng-click="assists = assists - 1">-</button>
+          </span>
+          <span>
+            Ungoals
+            <button ng-click="ungoals = ungoals + 1">+</button>
+            <button ng-click="ungoals = ungoals - 1">-</button>
+          </span>
+          <span>
+            Dunks
+            <button ng-click="dunks = dunks + 1">+</button>
+            <button ng-click="dunks = dunks - 1">-</button>
+          </span>
+          <span>
+            Around the world
+            <button ng-click="atws = atws + 1">+</button>
+            <button ng-click="atws = atws - 1">-</button>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </section>
+  <section class="player-info">
+    <h3>Visitors</h3>
+    <ul>
+      <li ng-repeat="player in game.visitorTeam">
+        <a href="/players/{{player.id}}">{{player.name}}</a>
+        <div class="stats">
+          <p ng-init="goals=0">{{goals}}</p>
+          <p ng-init="blocks=0">{{blocks}}</p>
+          <p ng-init="assists=0">{{assists}}</p>
+          <p ng-init="ungoals=0">{{ungoals}}</p>
+          <p ng-init="dunks=0">{{dunks}}</p>
+          <p ng-init="atws=0">{{atws}}</p>
+        </div>
+        <div ng-show="game.active">
+          <span>
+            Goals
+            <button ng-click="goals = goals + 1">+</button>
+            <button ng-click="goals = goals - 1">-</button>
+          </span>
+          <span>
+            Blocks
+            <button ng-click="blocks = blocks + 1">+</button>
+            <button ng-click="blocks = blocks - 1">-</button>
+          </span>
+          <span>
+            Assists
+            <button ng-click="assists = assists + 1">+</button>
+            <button ng-click="assists = assists - 1">-</button>
+          </span>
+          <span>
+            Ungoals
+            <button ng-click="ungoals = ungoals + 1">+</button>
+            <button ng-click="ungoals = ungoals - 1">-</button>
+          </span>
+          <span>
+            Dunks
+            <button ng-click="dunks = dunks + 1">+</button>
+            <button ng-click="dunks = dunks - 1">-</button>
+          </span>
+          <span>
+            Around the world
+            <button ng-click="atws = atws + 1">+</button>
+            <button ng-click="atws = atws - 1">-</button>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </section>
+</div>

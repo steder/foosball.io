@@ -1,0 +1,44 @@
+<section class="leagues wrapper">
+  <h2>Create a new league!</h2>
+  <form name="NewLeague" ng-controller="NewLeagueCtrl">
+    <input type="text"
+           name="shortName"
+           ng-model="shortName"
+           placeholder="YOUR_LEAGUE"
+           ng-minlength="1"
+           ng-maxlength="15"
+           size="25"
+           ng-pattern="validShortName"
+           required ng-trim="false">
+
+    <span class="error" ng-show="NewLeague.shortName.$error.required">
+      Required!</span>
+    <span class="error" ng-show="NewLeague.shortName.$error.pattern">
+      A-Z, 0-9, and _ only</span>
+
+    <br/>
+    <input type="text"
+           name="displayName"
+           ng-model="displayName"
+           placeholder="Your Awesome League"
+           ng-minlength="1"
+           ng-maxlength="50"
+           size="50"
+           ng-pattern="validDisplayName"
+           required ng-trim="false">
+
+    <span class="error" ng-show="NewLeague.displayName.$error.required">
+      Required!</span>
+    <span class="error" ng-show="NewLeague.displayName.$error.pattern">
+      A-Z, 0-9, _, -, and space only</span>
+
+    <br/>
+
+    <tt>text = {{text}}</tt><br/>
+    <tt>NewLeague.input.$valid = {{NewLeague.input.$valid}}</tt><br/>
+    <tt>NewLeague.input.$error = {{NewLeague.input.$error}}</tt><br/>
+    <tt>NewLeague.$valid = {{NewLeague.$valid}}</tt><br/>
+    <tt>NewLeague.$error.required = {{!!NewLeague.$error.required}}</tt><br/>
+    <button ng-click="addLeague()">Make it so!</button>
+  </form>
+</section>

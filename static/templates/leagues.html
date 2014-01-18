@@ -1,0 +1,9 @@
+<section class="leagues wrapper">
+  <h2>Your Leagues</h2>
+  <ol>
+    <li ng-repeat="league in leagues">
+      <a ng-href="/leagues/{{ league.id }}">{{ league.name }}</a>
+    </li>
+  </ol>
+  <button go-click="/leagues/new">Add a league</button>
+</section>
