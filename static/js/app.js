@@ -46,3 +46,16 @@ FoosApp.config(['$routeProvider', '$locationProvider',
         // redirectTo:
       });
   }]);
+
+FoosApp.controller("AppCtrl", ["$scope", "$location", function($scope, $location) {
+  // setup a scope providing a "currentPath" variable that we can check to see if 
+  $scope.currentPath = $location.path();
+  // add the location service to the scope as we need it to be able to watch
+  // $location.path() for changes:
+  $scope.$location = $location;
+  // finally; setup a watch on the $location.path() and update our currentPath
+  // whenever we change the URL.
+  $scope.$watch("$location.path()", function(loc) {
+    $scope.currentPath = loc;
+  });
+}]);

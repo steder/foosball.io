@@ -5,17 +5,18 @@
 {% raw %}
 <flash:messages></flash:messages>
 
-<nav class="group">
+<nav class="group" ng-controller="AppCtrl">
   <ul class="navigation">
     <li>
-      <a ng-class="{ active: $location.path() =='/' }" href="/">
+      <a ng-class="{active: currentPath == '/'}" class href="/">
         Home</a>
     </li>
-    <li><a ng-class="{ active: $location.path() =='/about' }" href="/about">
+    <li>
+    <a ng-class="{active: currentPath == '/about'}" class href="/about">
         About</a>
     </li>
     <li>
-      <a ng-class="{ active: $location.path() =='/leagues' }" href="/leagues">
+      <a ng-class="{active: currentPath == '/leagues'}" class href="/leagues">
         Leagues</a>
     </li>
   </ul>
