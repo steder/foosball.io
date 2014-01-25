@@ -47,7 +47,8 @@ FoosApp.config(['$routeProvider', '$locationProvider',
       });
   }]);
 
-FoosApp.controller("AppCtrl", ["$scope", "$location", function($scope, $location) {
+
+FoosApp.controller("NavCtrl", ["$scope", "$location", function($scope, $location) {
   // setup a scope providing a "currentPath" variable that we can check to see if 
   $scope.currentPath = $location.path();
   // add the location service to the scope as we need it to be able to watch
