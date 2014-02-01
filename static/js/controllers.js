@@ -114,6 +114,8 @@ FoosControllers.controller("NewGameCtrl", ["$scope", "$location", function($scop
     $scope.shortName = "";
     $scope.displayName = "";
 
+    $scope.availablePlayers = PLAYER_FIXTURES;
+
     $scope.addGame = function() {
         console.log("TODO: Create game '" + $scope.text + "' for real");
         var new_game = {
@@ -123,9 +125,11 @@ FoosControllers.controller("NewGameCtrl", ["$scope", "$location", function($scop
             homeScore: 0,
             visitorScore: 0,
             homeTeam: [],
-            visitorTeam: []
+            visitorTeam: [],
+            active: true
         };
         GAME_FIXTURES.push(new_game);
+        //LEAGUE_FIXTURES[league_id].game_ids.push(new_game.id);
         $location.path("/games/" + new_game.id);
     };
     $scope.validShortName = /^\w+$/;

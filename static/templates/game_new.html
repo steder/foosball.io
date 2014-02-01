@@ -1,6 +1,23 @@
 <section class="games wrapper">
   <h2>Create a new game!</h2>
   <form name="NewGame" ng-controller="NewGameCtrl">
+    <fieldset><span>Home Team
+      <select ng-model="homeGoalie"
+            ng-options="p.name for p in availablePlayers"></select>
+      <select ng-model="homeShooter"
+            ng-options="p.name for p in availablePlayers"></select>   
+    </span>
+    </fieldset>
+    <fieldset><span>Visitor Team
+      <select ng-model="visitorGoalie"
+            ng-options="p.name for p in availablePlayers"></select>
+      <select ng-model="visitorShooter"
+            ng-options="p.name for p in availablePlayers"></select>
+      </span>
+    </fieldset>
+    <br/>
+
+    <!-- this should default to "LEAGUE_<GAME_ID>" -->
     <input type="text"
            name="shortName"
            ng-model="shortName"
@@ -9,7 +26,8 @@
            ng-maxlength="15"
            size="25"
            ng-pattern="validShortName"
-           required ng-trim="false">
+           required ng-trim="false"
+           >
 
     <span class="error" ng-show="NewGame.shortName.$error.required">
       Required!</span>
@@ -17,6 +35,7 @@
       A-Z, 0-9, and _ only</span>
 
     <br/>
+    <!-- Display Name should default to "Home <Goalie>( + <Shooter>) vs Visitor <Goalie>( + <Shooter>) (Game ID)" -->
     <input type="text"
            name="displayName"
            ng-model="displayName"
@@ -34,11 +53,15 @@
 
     <br/>
 
-    <tt>text = {{text}}</tt><br/>
+    <span>Home {{homeGoalie.name}} + {{homeShooter.name}} vs Visitors {{visitorGoalie.name}} + {{visitorShooter.name}}</span>
+    <br/>
+
+    <!-- <tt>text = {{text}}</tt><br/>
     <tt>NewGame.input.$valid = {{NewGame.input.$valid}}</tt><br/>
     <tt>NewGame.input.$error = {{NewGame.input.$error}}</tt><br/>
     <tt>NewGame.$valid = {{NewGame.$valid}}</tt><br/>
     <tt>NewGame.$error.required = {{!!NewGame.$error.required}}</tt><br/>
+    -->
     <button ng-click="addGame()">Make it so!</button>
   </form>
 </section>
