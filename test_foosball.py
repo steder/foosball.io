@@ -14,42 +14,6 @@ from flask.ext.testing import LiveServerTestCase
 from selenium import webdriver
 
 from foosball import app
-from foosball import Game, League, Player
-
-
-class DatabaseTestCase(unittest.TestCase):
-    def setUp(self):
-        #self.db_fd, app.config['DATABASE'] = tempfile.mkstemp()
-        app.config['TESTING'] = True
-        self.app = app.test_client()
-        #app.init_db()
-
-    def tearDown(self):
-        #os.close(self.db_fd)
-        #os.unlink(flaskr.app.config['DATABASE'])
-        pass
-
-
-class FooTest(DatabaseTestCase):
-    def test_one(self):
-        self.assertEqual(1+1, 2)
-
-
-
-class GameModelTest(DatabaseTestCase):
-    def test_create(self):
-        g = Game()
-        self.assertEqual(g.description, "")
-
-
-class LeagueModelTest(DatabaseTestCase):
-    def test_create(self):
-        l = League()
-
-
-class PlayerModelTest(DatabaseTestCase):
-    def test_create(self):
-        p = Player()
 
 
 class MyTest(LiveServerTestCase):
@@ -71,5 +35,4 @@ class MyTest(LiveServerTestCase):
         driver = webdriver.PhantomJS()
         driver.get(self.get_server_url())
         print(driver.current_url)
-        driver.quit
-
+        driver.quit()
