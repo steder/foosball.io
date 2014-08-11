@@ -1,4 +1,15 @@
-var FoosControllers = angular.module('FoosControllers', []);
+var FoosControllers = angular.module('FoosControllers', ['firebase']);
+
+
+function slugify(text) {
+    // shamelessly stolen from: https://gist.github.com/mathewbyrne/1280286
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '');            // Trim - from end of text
+}
 
 
 var LEAGUE_FIXTURES = [
@@ -36,24 +47,28 @@ var GAME_FIXTURES = [
 ];
 
 
-FoosControllers.controller("LeaguesCtrl", ['$scope', function($scope) {
-    $scope.leagues = LEAGUE_FIXTURES;
+FoosControllers.controller("LeaguesCtrl", ['$scope', '$firebase', function($scope, $firebase) {
+    var firebase_root_url = "https://foos.firebaseio.com/";
+    var leagues_url = firebase_root_url + "leagues";
+    var fire = new Firebase(leagues_url);
+    var sync = $firebase(fire);
+    $scope.leagues = sync.$asObject();
 }]);
 
 
-FoosControllers.controller("LeagueCtrl", ["$scope", "$route", "$location", "flash",
-function($scope, $route, $location, flash) {
+FoosControllers.controller("LeagueCtrl", ["$scope", "$route", "$location", "flash", "$firebase",
+function($scope, $route, $location, flash, $firebase) {
+
     console.log($route.current.params);
     console.log($route.current.params.league_id);
-    var league_id = parseInt($route.current.params.league_id);
+    var league_id = $route.current.params.league_id;
     console.log("league_id: " + league_id);
-    var league = undefined;
 
-    for (var league_idx = 0; league_idx < LEAGUE_FIXTURES.length; league_idx++) {
-        if (LEAGUE_FIXTURES[league_idx].id === league_id) {
-            league = LEAGUE_FIXTURES[league_idx];
-        }
-    }
+    var firebase_root_url = "https://foos.firebaseio.com/";
+    var league_url = firebase_root_url + "leagues/" + league_id;
+    var fire = new Firebase(league_url);
+    var sync = $firebase(fire);
+    var league = sync.$asObject();
 
     if (!league) {
         // there was no league, render 404?
@@ -67,46 +82,54 @@ function($scope, $route, $location, flash) {
 
     // lookup players:
     $scope.players = [];
-    for (var player_idx = 0; player_idx < PLAYER_FIXTURES.length; player_idx++) {
-        for (var league_idx = 0; league_idx < league.player_ids.length; league_idx++) {
-            var player = PLAYER_FIXTURES[player_idx];
-            if (player.id == league.player_ids[league_idx]) {
-                $scope.players.push(player);
-            }
-        }
-    }
+    // for (var player_idx = 0; player_idx < PLAYER_FIXTURES.length; player_idx++) {
+    //     for (var league_idx = 0; league_idx < league.player_ids.length; league_idx++) {
+    //         var player = PLAYER_FIXTURES[player_idx];
+    //         if (player.id == league.player_ids[league_idx]) {
+    //             $scope.players.push(player);
+    //         }
+    //     }
+    // }
 
+    // Lookup games:
     $scope.games = [];
-    for (var game_idx = 0; game_idx < GAME_FIXTURES.length; game_idx++) {
-        for (var league_idx = 0; league_idx < league.game_ids.length; league_idx++) {
-            var game = GAME_FIXTURES[game_idx];
-            if (game.id == league.game_ids[league_idx]) {
-                $scope.games.push(game);
-            }
-        }
-    }
-    $scope.availablePlayers = [PLAYER_FIXTURES[2],];
+    // for (var game_idx = 0; game_idx < GAME_FIXTURES.length; game_idx++) {
+    //     for (var league_idx = 0; league_idx < league.game_ids.length; league_idx++) {
+    //         var game = GAME_FIXTURES[game_idx];
+    //         if (game.id == league.game_ids[league_idx]) {
+    //             $scope.games.push(game);
+    //         }
+    //     }
+    // }
+    // $scope.availablePlayers = [PLAYER_FIXTURES[2],];
 }]);
 
 
-FoosControllers.controller("NewLeagueCtrl", ["$scope", "$location", function($scope, $location) {
+FoosControllers.controller("NewLeagueCtrl", ["$scope", "$location", "$firebase", function($scope, $location, $firebase) {
+    var firebase_root_url = "https://foos.firebaseio.com/";
+    var leagues_url = firebase_root_url + "leagues";
+    var fire = new Firebase(leagues_url);
+    var sync = $firebase(fire);
+    var leagues = sync.$asObject();
+    $scope.leagues = leagues;
     $scope.shortName = "";
     $scope.displayName = "";
 
     $scope.addLeague = function() {
-        console.log("TODO: Create league '" + $scope.text + "' for real");
+        console.log("TODO: Create league '" + $scope.shortName + "' for real");
         var new_league = {
-            id: LEAGUE_FIXTURES.length + 1,
+            id: slugify($scope.shortName),
             shortName: $scope.shortName,
             name: $scope.displayName,
             player_ids: [],
             game_ids: []
         };
-        LEAGUE_FIXTURES.push(new_league);
+        $scope.leagues[new_league.id] = new_league;
+        $scope.leagues.$save();
         $location.path("/leagues/" + new_league.id);
     };
     $scope.validShortName = /^\w+$/;
-    $scope.validDisplayName = /^[\w- ]+$/;
+    $scope.validDisplayName = /^[\w-' ]+$/;
 }]);
 
 
@@ -129,7 +152,7 @@ FoosControllers.controller("NewGameCtrl", ["$scope", "$location", function($scop
             active: true
         };
         GAME_FIXTURES.push(new_game);
-        //LEAGUE_FIXTURES[league_id].game_ids.push(new_game.id);
+        //$scope.leagues[league_id].game_ids.push(new_game.id);
         $location.path("/games/" + new_game.id);
     };
     $scope.validShortName = /^\w+$/;

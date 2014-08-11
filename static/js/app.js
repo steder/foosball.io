@@ -3,6 +3,7 @@ var FoosApp = angular.module('FoosApp', [
   'FoosControllers',
   'FoosDirectives',
   'flash',
+  'firebase'
 ]);
 
 
@@ -48,8 +49,12 @@ FoosApp.config(['$routeProvider', '$locationProvider',
   }]);
 
 
-FoosApp.controller("NavCtrl", ["$scope", "$location", function($scope, $location) {
-  // setup a scope providing a "currentPath" variable that we can check to see if 
+FoosApp.controller("NavCtrl", ["$scope", "$location", "$firebase", function($scope, $location, $firebase) {
+  var firebase_root_url = "https://foos.firebaseio.com/";
+  var fire = new Firebase(firebase_root_url);
+  var sync = $firebase(fire);
+
+  // setup a scope providing a "currentPath" variable that we can check to see if
   $scope.currentPath = $location.path();
   // add the location service to the scope as we need it to be able to watch
   // $location.path() for changes:
