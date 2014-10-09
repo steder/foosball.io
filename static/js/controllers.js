@@ -66,8 +66,8 @@ function($scope, $route, $location, flash, $firebase) {
 
     var firebase_root_url = "https://foos.firebaseio.com/";
     var league_url = firebase_root_url + "leagues/" + league_id;
-    var fire = new Firebase(league_url);
-    var sync = $firebase(fire);
+    var league_ref = new Firebase(league_url);
+    var sync = $firebase(league_ref);
     var league = sync.$asObject();
 
     if (!league) {
@@ -81,27 +81,18 @@ function($scope, $route, $location, flash, $firebase) {
     $scope.league = league;
 
     // lookup players:
-    $scope.players = [];
-    // for (var player_idx = 0; player_idx < PLAYER_FIXTURES.length; player_idx++) {
-    //     for (var league_idx = 0; league_idx < league.player_ids.length; league_idx++) {
-    //         var player = PLAYER_FIXTURES[player_idx];
-    //         if (player.id == league.player_ids[league_idx]) {
-    //             $scope.players.push(player);
-    //         }
-    //     }
-    // }
+    var players_url = firebase_root_url + "/players";
+  var players_ref = new Firebase(players_url);
+  var players_sync = $firebase(players_ref);
+  $scope.players = players_sync.$asArray();
 
     // Lookup games:
-    $scope.games = [];
-    // for (var game_idx = 0; game_idx < GAME_FIXTURES.length; game_idx++) {
-    //     for (var league_idx = 0; league_idx < league.game_ids.length; league_idx++) {
-    //         var game = GAME_FIXTURES[game_idx];
-    //         if (game.id == league.game_ids[league_idx]) {
-    //             $scope.games.push(game);
-    //         }
-    //     }
-    // }
-    // $scope.availablePlayers = [PLAYER_FIXTURES[2],];
+    var games_url = firebase_root_url + "/games";
+  var games_ref = new Firebase(games_url);
+  var games_sync = $firebase(games_ref);
+  $scope.games = games_sync.$asArray();
+
+
 }]);
 
 
@@ -160,18 +151,29 @@ FoosControllers.controller("NewGameCtrl", ["$scope", "$location", function($scop
 }]);
 
 
-FoosControllers.controller("NewPlayerCtrl", ["$scope", "$location", function($scope, $location) {
+FoosControllers.controller("NewPlayerCtrl", ["$scope", "$location", "$firebase", function($scope, $location, $firebase) {
     $scope.shortName = "";
     $scope.displayName = "";
 
+    var firebase_root_url = "https://foos.firebaseio.com/";
+    var players_url = firebase_root_url + "players";
+    var fire = new Firebase(players_url);
+    var sync = $firebase(fire);
+    var players = sync.$asArray();
+
     $scope.addPlayer = function() {
-        console.log("TODO: Create player '" + $scope.text + "' for real");
-        var new_player = {
-            id: PLAYER_FIXTURES.length + 1,
-            shortName: $scope.shortName,
-            name: $scope.displayName,
-        };
-        PLAYER_FIXTURES.push(new_player);
+        // console.log("TODO: Create player '" + $scope.text + "' for real");
+        // var new_player = {
+        //     id: PLAYER_FIXTURES.length + 1,
+        //     shortName: $scope.shortName,
+        //     name: $scope.displayName,
+        // };
+        // PLAYER_FIXTURES.push(new_player);
+        // $location.path("/players/" + new_player.id);
+        var new_player = {id: $scope.shortName,
+                          league: "mike",
+                          name: $scope.displayName}
+        players.push();
         $location.path("/players/" + new_player.id);
     };
     $scope.validShortName = /^\w+$/;
@@ -179,14 +181,21 @@ FoosControllers.controller("NewPlayerCtrl", ["$scope", "$location", function($sc
 }]);
 
 
-FoosControllers.controller("PlayerCtrl", ["$scope", "$route", "$location", function($scope, $route, $location) {
+FoosControllers.controller("PlayerCtrl", ["$scope", "$route", "$location", "$firebase", function($scope, $route, $location, $firebase) {
     var player_id = $route.current.params.player_id;
-    var player = undefined;
-    for (var i = 0; i < PLAYER_FIXTURES.length; i++) {
-        if (PLAYER_FIXTURES[i].id == player_id) {
-            player = PLAYER_FIXTURES[i];
-        }
-    }
+    // var player = undefined;
+    // for (var i = 0; i < PLAYER_FIXTURES.length; i++) {
+    //     if (PLAYER_FIXTURES[i].id == player_id) {
+    //         player = PLAYER_FIXTURES[i];
+    //     }
+    // }
+
+    var firebase_root_url = "https://foos.firebaseio.com/";
+    var player_url = firebase_root_url + "players" + "/" + player_id;
+    var fire = new Firebase(player_url);
+  var sync = $firebase(fire);
+    var player = sync.$asObject();
+
     console.log("player: " + player);
     $scope.player = player;
 }]);
