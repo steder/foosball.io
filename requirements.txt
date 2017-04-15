@@ -20,3 +20,4 @@ selenium==2.39.0
 tox==1.6.1
 virtualenv==1.10.1
 webassets==0.9
+compass==0.12.2
